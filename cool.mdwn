@@ -1,0 +1,18 @@
+Convergence e Monkeysphere: chaves para gestão SSL distribuída
+==============================================================
+
+O Outro Lado ed 2
+
+Apresentarei os projetos Convergence (http://convergence.io) e Monkeysphere
+(http://web.monkeysphere.info), duas alternativas possíveis, práticas e
+complementares para substituir o atual cartel das Autoridades Certificadoras
+utilizadas na pilha SSL.
+
+- 2011: o ano das vulnerabilidades do SSL
+- CipherSuite
+- Perfect Forward Secrecy
+- SSLv3 X TLS
+- DoS Mitigation
+- Autoridades Certificadoras (CAs)
+
+https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf
