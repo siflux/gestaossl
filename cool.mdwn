@@ -1,18 +1,137 @@
 Convergence e Monkeysphere: chaves para gestão SSL distribuída
 ==============================================================
 
-O Outro Lado ed 2
+Conferência O Outro Lado Edição 2
+---------------------------------
 
-Apresentarei os projetos Convergence (http://convergence.io) e Monkeysphere
-(http://web.monkeysphere.info), duas alternativas possíveis, práticas e
-complementares para substituir o atual cartel das Autoridades Certificadoras
-utilizadas na pilha SSL.
+Apresentarei os projetos [Convergence](http://convergence.io) e
+[Monkeysphere](http://web.monkeysphere.info), duas alternativas possíveis,
+práticas e complementares para substituir o atual cartel das Autoridades
+Certificadoras utilizadas na pilha SSL.
 
-- 2011: o ano das vulnerabilidades do SSL
+Propósito
+---------
+
+De 2008 até o momento, foram reveladas falhas fundamentais em vários protocolos
+básicos da internet:
+
+- DNS: https://lwn.net/Articles/289138 / http://www.unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html
+- BGP: http://www.wired.com/threatlevel/2008/08/how-to-intercep/
+- SSL: https://links.sarava.org/tags/ssl
+
+Estamos falando de falhas de especificação e não de implementação ou DoS, o que é muito
+mais difícil de mitigar.
+
+SSL: Breve histórico
+--------------------
+
+- Ótima referência: https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf
+- x509
+- TLS
+
+SSL
+---
+
 - CipherSuite
 - Perfect Forward Secrecy
 - SSLv3 X TLS
 - DoS Mitigation
 - Autoridades Certificadoras (CAs)
+- Hashclash (MD5): http://www.win.tue.nl/hashclash/rogue-ca/
 
-https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf
+Autoridades certificadoras
+--------------------------
+
+- 2009: https://ssl.netcraft.com/ssl-sample-report
+- 2010: Verisign: operação de CA vendida por US$1.28 bi para a Symantec
+
+Como me torno uma autoridade certificadora?
+-------------------------------------------
+
+Depende dos processos de inclusão
+
+  - Pelo fabricante da aplicação ou biblioteca
+  - Pelo distribuidor da aplicação ou biblioteca
+  - O usuário pode incluir manualmente
+
+Quanto mais upstream for a inclusão, maior a ubiquidade. Certificados não-instalados
+são considerados como autoassinados.
+
+- Exemplo: o caso do http://www.cacert.org, uma CA Comunitária
+- Mozilla: https://www.mozilla.org/projects/security/certs/included/
+- ICP-Brasil: http://www.iti.gov.br/twiki/bin/view/Certificacao/WebHome
+
+- Mozilla - https://wiki.mozilla.org/CA:How_to_apply
+- Opera - http://www.opera.com/docs/ca/
+- M$ - http://technet.microsoft.com/en-us/library/cc751157.aspx (desatualizado)
+- Safari - https://www.apple.com/certificateauthority/ca_program.html
+- Google - ?
+
+- Pouca transparência na relação entre CAs e fabricantes de software
+- Sem gestão multissetorial
+- Admins de instituições pequenas não tem outra escolha senão utilizar esses CAs
+
+Situação atual
+--------------
+
+- Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?
+- sslsnif: http://www.thoughtcrime.org/software/sslsniff/
+- Maus hábitos de sysadmins geram falsa sensação de segurança
+- Bypass da tela de conexão não-confiável
+
+Casos reais
+-----------
+
+"Crime maior do que roubar uma CA é fundar uma CA" - Bertold Brecha
+
+- Comodo! http://it.slashdot.org/story/08/12/23/0046258
+- The EFF SSL Observatory - https://www.eff.org/observatory
+- A situação é alarmante: basta apenas que um único CA seja comprometido para ruir toda a infraestrutura.
+- SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/etc também sofrem dessas vulnerabilidades.
+
+O que é preciso para interceptar conexão SSL?
+---------------------------------------------
+
+1. Certificado falso.
+2. Meios efetivos de um MITM:
+   - DNS poisoning apontando requisições para servidores maliciosos.
+   - Redirecionamento de tráfego via BGP.
+   - Acesso físico à rede.
+
+Mas o quanto disso é factível?
+------------------------------
+
+- Oriente médio: ...
+- EUA: NSA warrantless surveillance controversy: https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T
+- Brasil: Massive DNS poisoning attacks in Brazil: http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil
+
+A falha atinge de pequenos provedores até grandes porções da internet. O ataque é o mesmo, variando
+apenas a capacidade do atacante.
+
+Propostas de mitigação ou modelos alternativos
+----------------------------------------------
+
+- Certificate Patrol: https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search
+- DANE
+
+A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
+é importante considerar que _o modelo atual de certificação não é mandatório._ Ao invés disso, o modelo
+de CAs pode ser _plugável._
+
+Convegence
+----------
+
+- http://convergence.io
+- Add-on: http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall
+- Precedido pelo Perspectives (http://perspectives-project.org)
+
+Monkeysphere
+------------
+
+- http://web.monkeysphere.info
+- Add-on: https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search
+
+Integração
+----------
+
+O Convergence pode ...
