@@ -4,10 +4,10 @@ Convergence e Monkeysphere: chaves para gestão SSL distribuída
 Conferência O Outro Lado Edição 2
 ---------------------------------
 
-Apresentarei os projetos [Convergence](http://convergence.io) e
-[Monkeysphere](http://web.monkeysphere.info), duas alternativas possíveis,
-práticas e complementares para substituir o atual cartel das Autoridades
-Certificadoras utilizadas na pilha SSL.
+[Convergence](http://convergence.io) e
+[Monkeysphere](http://web.monkeysphere.info): duas alternativas viáveis para
+substituir ou complementar o atual cartel das Autoridades Certificadoras
+utilizadas na pilha SSL.
 
 Propósito
 ---------
@@ -15,8 +15,8 @@ Propósito
 De 2008 até o momento, foram reveladas falhas fundamentais em vários protocolos
 básicos da internet:
 
-- DNS: https://lwn.net/Articles/289138 / http://www.unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html
-- BGP: http://www.wired.com/threatlevel/2008/08/how-to-intercep/
+- DNS: [Dan Kaminsky Discovers Fundamental Issue In DNS](https://lwn.net/Articles/289138) ([análise](http://www.unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html))
+- BGP: [The Internet’s Biggest Security Hole](http://www.wired.com/threatlevel/2008/08/how-to-intercep/)
 - SSL: https://links.sarava.org/tags/ssl
 
 Estamos falando de falhas de especificação e não de implementação ou DoS, o que é muito
@@ -26,24 +26,24 @@ SSL: Breve histórico
 --------------------
 
 - Ótima referência: https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf
-- x509
-- TLS
+- Sistema PKI em x509
+- TLS: protocolo IETF, sucessor do SSL.
 
 SSL
 ---
 
-- CipherSuite
-- Perfect Forward Secrecy
-- SSLv3 X TLS
-- DoS Mitigation
+- CipherSuite e Perfect Forward Secrecy
+- SSLv3 X TLS 1.2
+- [Computational DoS Mitigation](http://vincent.bernat.im/en/blog/2011-ssl-dos-mitigation.html)
+- [Hashclash (MD5)](http://www.win.tue.nl/hashclash/rogue-ca/)
 - Autoridades Certificadoras (CAs)
-- Hashclash (MD5): http://www.win.tue.nl/hashclash/rogue-ca/
 
 Autoridades certificadoras
 --------------------------
 
-- 2009: https://ssl.netcraft.com/ssl-sample-report
+- 2009: [Relatório da Netcraft](https://ssl.netcraft.com/ssl-sample-report)
 - 2010: Verisign: operação de CA vendida por US$1.28 bi para a Symantec
+- "Two big to fail"
 
 Como me torno uma autoridade certificadora?
 -------------------------------------------
@@ -70,14 +70,15 @@ são considerados como autoassinados.
 - Pouca transparência na relação entre CAs e fabricantes de software
 - Sem gestão multissetorial
 - Admins de instituições pequenas não tem outra escolha senão utilizar esses CAs
+- As CAs são confiadas exatamente por serem CAs. Onde está a abertura das auditorias?
 
 Situação atual
 --------------
 
 - Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?
-- sslsnif: http://www.thoughtcrime.org/software/sslsniff/
+- [sslsnif](http://www.thoughtcrime.org/software/sslsniff)
 - Maus hábitos de sysadmins geram falsa sensação de segurança
-- Bypass da tela de conexão não-confiável
+- Bypass da tela de "conexão não-confiável"
 
 Casos reais
 -----------
@@ -85,7 +86,7 @@ Casos reais
 "Crime maior do que roubar uma CA é fundar uma CA" - Bertold Brecha
 
 - Comodo! http://it.slashdot.org/story/08/12/23/0046258
-- The EFF SSL Observatory - https://www.eff.org/observatory
+- [The EFF SSL Observatory](https://www.eff.org/observatory)
 - A situação é alarmante: basta apenas que um único CA seja comprometido para ruir toda a infraestrutura.
 - SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/etc também sofrem dessas vulnerabilidades.
 
@@ -102,17 +103,25 @@ Mas o quanto disso é factível?
 ------------------------------
 
 - Oriente médio: ...
-- EUA: NSA warrantless surveillance controversy: https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T
-- Brasil: Massive DNS poisoning attacks in Brazil: http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil
+- EUA: [NSA warrantless surveillance controversy](https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T)
+- Brasil: [Massive DNS poisoning attacks in Brazil](http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil)
 
 A falha atinge de pequenos provedores até grandes porções da internet. O ataque é o mesmo, variando
 apenas a capacidade do atacante.
 
-Propostas de mitigação ou modelos alternativos
-----------------------------------------------
+Mitigação
+---------
 
-- Certificate Patrol: https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search
-- DANE
+Recentemente foram propostas várias formas de mitigação:
+
+- [Certificate Patrol](https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search): muito útil porém sofre to problema de "bootstrapping".
+- [Public Key Pinning Extension for HTTP (IETF)](https://www.ietf.org/id/draft-evans-palmer-key-pinning-00.txt): também sofre do "problema de bootstrapping".
+- [DNSSEC/DANE](http://tools.ietf.org/html/draft-ietf-dane-protocol-12): aumenta ainda mais a centralidade do DNS e apenas muda o problema de lugar.
+- [Sovereign Keys (EFF)](https://www.eff.org/deeplinks/2011/11/sovereign-keys-proposal-make-https-and-email-more-secure)
+- [Certificate Authority Transparency and Auditability (Google)](http://tech.slashdot.org/story/11/11/29/2226211/google-researchers-propose-plan-to-fix-ca-system)
+
+Alternativas?
+-------------
 
 A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
 é importante considerar que _o modelo atual de certificação não é mandatório._ Ao invés disso, o modelo
@@ -124,14 +133,37 @@ Convegence
 - http://convergence.io
 - Add-on: http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall
 - Precedido pelo Perspectives (http://perspectives-project.org)
+- "Trust agility"
+- Problema: se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber
 
 Monkeysphere
 ------------
 
 - http://web.monkeysphere.info
 - Add-on: https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search
+- Atrela a autenticação à identificações pessoais pela Web Of Trust
+
+Demonstrações
+-------------
+
+- Monkeysphere
+- Convergence
 
 Integração
 ----------
 
-O Convergence pode ...
+- O Monkeysphere ainda é muito geeky porém oferece um nível de segurança muito mais alto
+  para a verificação de certificados.
+- O Convergence pode utilizar como backend o Monkeysphere ...
+
+Perspectivas
+------------
+
+- A indústria sabe que o modelo de CAs está falido, mas ainda assim existe uma insistência
+  em dizer que o problema são as "maçãs podres".
+
+- Os fabricantes de navegadores tem peso maior na decisão, porém dificilmente farão mudanças bruscas ...
+
+- A pluralidade de métodos e a _plugalidade_ (:P) de soluções podem convergir num esquema de validação ...
+
+- Conscientização do público é fundamental.
