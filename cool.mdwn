@@ -7,7 +7,7 @@ Conferência O Outro Lado Edição 2
 [Convergence](http://convergence.io) e
 [Monkeysphere](http://web.monkeysphere.info): duas alternativas viáveis para
 substituir ou complementar o atual cartel das Autoridades Certificadoras
-utilizadas na pilha SSL.
+utilizadas na pilha SSL/TLS.
 
 Propósito
 ---------
@@ -17,7 +17,7 @@ básicos da internet:
 
 - DNS: [Dan Kaminsky Discovers Fundamental Issue In DNS](https://lwn.net/Articles/289138) ([análise](http://www.unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html))
 - BGP: [The Internet’s Biggest Security Hole](http://www.wired.com/threatlevel/2008/08/how-to-intercep/)
-- SSL: https://links.sarava.org/tags/ssl
+- SSL: [Várias brechas](https://links.sarava.org/tags/ssl)
 
 Estamos falando de falhas de especificação e não de implementação ou DoS, o que é muito
 mais difícil de mitigar.
@@ -25,22 +25,37 @@ mais difícil de mitigar.
 SSL: Breve histórico
 --------------------
 
-- Ótima referência: https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf
-- Sistema PKI em x509
-- TLS: protocolo IETF, sucessor do SSL.
+Pontos principais de um protocolo seguro:
+
+  1. Sigilo: a informação não será lida por terceiros.
+  2. Integridade: a informação não será adulterada.
+  3. Altenticidade: os pontos da comunicação serão verificados.
+  4. Disponibilidade: proteção a DoS, etc.
+  5. Anonimato.
+
+No [caso do SSL/TLS](https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf):
+
+  1. Sigilo: Bulk Encryption e troca de chaves: RSA or Diffie-Hellman (usem DHE!)
+  2. Integridade: MAC Digest (hash)
+  3. Autenticidade: Certificados
 
 SSL
 ---
 
+- HSTS
 - CipherSuite e Perfect Forward Secrecy
-- SSLv3 X TLS 1.2
-- [Computational DoS Mitigation](http://vincent.bernat.im/en/blog/2011-ssl-dos-mitigation.html)
-- [Hashclash (MD5)](http://www.win.tue.nl/hashclash/rogue-ca/)
+- Revogação (CRS / OCSP)
 - Autoridades Certificadoras (CAs)
+- Ataques:
+  - [Computational DoS Mitigation (THC)](http://vincent.bernat.im/en/blog/2011-ssl-dos-mitigation.html)
+  - [Hashclash (MD5)](http://www.win.tue.nl/hashclash/rogue-ca/)
+  - [BEAST](https://wiki.koumbit.net/BeastSecurityAssessment)
+  - [LittleBlackBox](https://code.google.com/p/littleblackbox/): chaves padrões em dispositivos embarcados!
 
 Autoridades certificadoras
 --------------------------
 
+- Sistema PKI em x509 (ITU-T - 1998): atrela uma chave pública a um nome (domínio, email, etc)
 - 2009: [Relatório da Netcraft](https://ssl.netcraft.com/ssl-sample-report)
 - 2010: Verisign: operação de CA vendida por US$1.28 bi para a Symantec
 - "Two big to fail"
@@ -61,13 +76,17 @@ são considerados como autoassinados.
 - Mozilla: https://www.mozilla.org/projects/security/certs/included/
 - ICP-Brasil: http://www.iti.gov.br/twiki/bin/view/Certificacao/WebHome
 
+Procedimentos
+
 - Mozilla - https://wiki.mozilla.org/CA:How_to_apply
 - Opera - http://www.opera.com/docs/ca/
 - M$ - http://technet.microsoft.com/en-us/library/cc751157.aspx (desatualizado)
 - Safari - https://www.apple.com/certificateauthority/ca_program.html
 - Google - ?
 
-- Pouca transparência na relação entre CAs e fabricantes de software
+Em geral
+
+- Há pouca transparência na relação entre CAs e fabricantes de software
 - Sem gestão multissetorial
 - Admins de instituições pequenas não tem outra escolha senão utilizar esses CAs
 - As CAs são confiadas exatamente por serem CAs. Onde está a abertura das auditorias?
@@ -85,10 +104,11 @@ Casos reais
 
 "Crime maior do que roubar uma CA é fundar uma CA" - Bertold Brecha
 
-- Comodo! http://it.slashdot.org/story/08/12/23/0046258
-- [The EFF SSL Observatory](https://www.eff.org/observatory)
+- [Comodogate](http://it.slashdot.org/story/08/12/23/0046258): mail.google.com, addons.mozilla.org, login.skype.com, etc.
+- [DigiNotar](http://www.f-secure.com/weblog/archives/00002228.html): certificados falsos da CIA, MI6 e Mossad ([timeline](http://www.networking4all.com/en/ssl+certificates/ssl+news/time-line+for+the+diginotar+hack/)).
+- [The EFF SSL Observatory](https://www.eff.org/observatory) ([27c3](http://events.ccc.de/congress/2010/Fahrplan/events/4121.en.html))
 - A situação é alarmante: basta apenas que um único CA seja comprometido para ruir toda a infraestrutura.
-- SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/etc também sofrem dessas vulnerabilidades.
+- SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/VPN/etc também sofrem dessas vulnerabilidades.
 
 O que é preciso para interceptar conexão SSL?
 ---------------------------------------------
@@ -115,10 +135,15 @@ Mitigação
 Recentemente foram propostas várias formas de mitigação:
 
 - [Certificate Patrol](https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search): muito útil porém sofre to problema de "bootstrapping".
-- [Public Key Pinning Extension for HTTP (IETF)](https://www.ietf.org/id/draft-evans-palmer-key-pinning-00.txt): também sofre do "problema de bootstrapping".
-- [DNSSEC/DANE](http://tools.ietf.org/html/draft-ietf-dane-protocol-12): aumenta ainda mais a centralidade do DNS e apenas muda o problema de lugar.
+- IETF:
+  - [Public Key Pinning Extension for HTTP](https://www.ietf.org/id/draft-evans-palmer-key-pinning-00.txt): também sofre do "problema de bootstrapping".
+  - [DNSSEC/DANE](http://tools.ietf.org/html/draft-ietf-dane-protocol-12): aumenta ainda mais a centralidade do DNS e apenas muda o problema de lugar.
+  - [CAA](https://tools.ietf.org/html/draft-hallambaker-donotissue-03)
+  - [HASTLS](https://tools.ietf.org/html/draft-hoffman-server-has-tls-04)
 - [Sovereign Keys (EFF)](https://www.eff.org/deeplinks/2011/11/sovereign-keys-proposal-make-https-and-email-more-secure)
-- [Certificate Authority Transparency and Auditability (Google)](http://tech.slashdot.org/story/11/11/29/2226211/google-researchers-propose-plan-to-fix-ca-system)
+- Google:
+  - [Certificate Authority Transparency and Auditability](http://tech.slashdot.org/story/11/11/29/2226211/google-researchers-propose-plan-to-fix-ca-system)
+  - [Google Certificate Catalog](http://googleonlinesecurity.blogspot.com/2011/04/improving-ssl-certificate-security.html)
 
 Alternativas?
 -------------
@@ -131,17 +156,18 @@ Convegence
 ----------
 
 - http://convergence.io
-- Add-on: http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall
+- [Add-on para firefox](http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall)
 - Precedido pelo Perspectives (http://perspectives-project.org)
 - "Trust agility"
-- Problema: se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber
+- Problema: se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.
 
 Monkeysphere
 ------------
 
 - http://web.monkeysphere.info
-- Add-on: https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search
+- [Add-on pra firefox](https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search)
 - Atrela a autenticação à identificações pessoais pela Web Of Trust
+- Também provê autorização
 
 Demonstrações
 -------------
@@ -160,10 +186,10 @@ Perspectivas
 ------------
 
 - A indústria sabe que o modelo de CAs está falido, mas ainda assim existe uma insistência
-  em dizer que o problema são as "maçãs podres".
+  em dizer que o problema são as "maçãs podres" ou o excesso de CAs.
 
-- Os fabricantes de navegadores tem peso maior na decisão, porém dificilmente farão mudanças bruscas ...
+- Os fabricantes de navegadores tem peso maior na decisão, porém dificilmente farão mudanças bruscas uma vez que a internet hoje é muito dependente na infraestrutura de CAs.
 
-- A pluralidade de métodos e a _plugalidade_ (:P) de soluções podem convergir num esquema de validação ...
+- A pluralidade de métodos e a _plugalidade_ (:P) de soluções podem convergir num esquema de validação híbrido.
 
 - Conscientização do público é fundamental.
