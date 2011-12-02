@@ -119,6 +119,65 @@ O que é preciso para interceptar conexão SSL?
    - Redirecionamento de tráfego via BGP.
    - Acesso físico à rede.
 
+              ________ 
+             |        |
+             |        |
+             |________|
+
+
+     ________          ________
+    |        |        |        |
+    |        |        |        |
+    |________|        |________|
+
+
+Obtenção
+--------
+
+               ________ 
+              |        |
+           ___|   CA   |--.
+          /   |________|   \ 2
+         ^        |         : 
+       1 |        | 3       v   
+     ____|____    v     __________
+    |         |   |    |          |
+    |  Admin  |__/     | Servidor |
+    |_________|        |__________|
+
+
+
+Conexão SSL
+------------
+
+     _______________ 
+    |               |
+    |   CA (local)  |
+    |_______________|
+         |
+         ^ 3
+     ____|____       2        __________
+    |         |------<-------|          |
+    | Cliente |              | Servidor |
+    |_________|------>-------|__________|
+                     1  
+
+
+MITM
+----
+
+               ________ 
+              |        |
+           .->|  MITM  |-<.
+          /   |________|   \
+         |                  |
+         v                  v 
+     ____|____          ____|_____
+    |         |        |          |
+    | Cliente |---X----| Servidor |
+    |_________|        |__________|
+
+
 Mas o quanto disso é factível?
 ------------------------------
 
@@ -161,6 +220,45 @@ Convegence
 - "Trust agility"
 - Problema: se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.
 
+Funcionamento
+-------------
+
+     _______________     5 cert
+    |               |----<----.
+    | Notary server |          \
+    |_______________|---->---.  \
+      |  |               4    \  \
+    6 v  ^ 3 h+fp              \  \
+     _|__|____        2 cert  __\__\____
+    |         |------<-------|          |
+    | Cliente |              | Servidor |
+    |_________|------>-------|__________|
+                     1  
+
+Bundles
+-------
+
+                         ____      
+                .-----<-|    | 
+                |  .-->-| N1 |<
+     ___________|_|_    |____| \
+    |               |    ____   \
+    | Notary proxy  |->-|    |   \
+    |_______________|-<-| N2 |<.  \
+          |  |          |____|  \  \
+          v  ^            .      \  \
+          |  |            .       \  \
+          |  |            .        \  \
+          v  ^           ____       \  \
+          |  |          |    |       \  \
+          |  |          | Nn |        \  .
+          v  ^          |____|-<-->.   . |
+       ___|__|__                   _\__v_v___
+      |         |------<----------|          |
+      | Cliente |                 | Servidor |
+      |_________|------>----------|__________|
+                       
+
 Monkeysphere
 ------------
 
@@ -179,8 +277,10 @@ Integração
 ----------
 
 - O Monkeysphere ainda é muito geeky porém oferece um nível de segurança muito mais alto
-  para a verificação de certificados.
-- O Convergence pode utilizar como backend o Monkeysphere ...
+  para a verificação de certificados; o código está maduro porém é preciso muito mais desenvolvimento
+  de UI e usabilidade.
+- O Convergence pode utilizar como backend o Monkeysphere, o que pode reduzir o problema do MITM
+  upstream.
 
 Perspectivas
 ------------
@@ -193,3 +293,4 @@ Perspectivas
 - A pluralidade de métodos e a _plugalidade_ (:P) de soluções podem convergir num esquema de validação híbrido.
 
 - Conscientização do público é fundamental.
+
