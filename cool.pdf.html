@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>Convergence e Monkeysphere: chaves para gestão SSL distribuída</title>
+   
+   
+
+<style>
+html, body { margin: 0; padding: 0; }
+
+body { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; }
+
+a:link, a:visited { color: black; }
+
+h1 { font-size: 30pt;  }
+h2 { font-size: 28pt;  }
+h3 { font-size: 25pt;  }
+p, li, dt, dd, td, th { font-size: 18pt; }
+
+pre { font-size: 14pt;  }
+pre.small { font-size: 11pt; }
+
+pre.code {
+        background-color: azure;
+        padding: 5px;
+      }
+     
+ul { list-style-type: square; }    
+   
+.center { text-align: center; }   
+     
+.slide { page-break-after: always;
+         min-height: 100mm;
+         padding: 40px;
+         
+         border: 1px dotted black;
+
+/*      
+  background: -moz-linear-gradient( top, maroon, red);
+*/
+       }
+
+
+body {
+  font-family: monospace;
+}
+  
+.centered img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered {
+  text-align: center;
+}
+
+
+
+/*
+for princexml (CSS3 paged media support)
+@page { size: A4 landscape }
+*/
+</style>
+
+</head>
+<body>
+
+<div class="presentation">
+
+<div class='slide '>
+<h1 id="convergence-e-monkeysphere-chaves-para-gesto-ssl-distribuda---co0l---ed-2">Convergence e Monkeysphere: chaves para gestão SSL distribuída - Co0l - Ed. 2</h1><p><a href="http://convergence.io">Convergence</a> e
+<a href="http://web.monkeysphere.info">Monkeysphere</a>: duas alternativas viáveis para
+substituir ou complementar o atual cartel das Autoridades Certificadoras
+utilizadas na pilha SSL/TLS.</p>
+
+
+</div>
+<div class='slide '>
+<h1 id="propsito">Propósito</h1><p>De 2008 até o momento, foram reveladas falhas fundamentais em vários protocolos
+básicos da internet:</p>
+
+<ul>
+  <li>DNS: <a href="https://lwn.net/Articles/289138">Dan Kaminsky Discovers Fundamental Issue In DNS</a> (<a href="http://www.unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html">análise</a>)</li>
+  <li>BGP: <a href="http://www.wired.com/threatlevel/2008/08/how-to-intercep/">The Internet’s Biggest Security Hole</a></li>
+  <li>SSL: <a href="https://links.sarava.org/tags/ssl">Várias brechas</a></li>
+</ul>
+
+<p>Estamos falando de falhas de especificação e não de implementação ou DoS, o que é muito
+mais difícil de mitigar.</p>
+
+
+</div>
+<div class='slide '>
+<h1 id="ssl-breve-histrico">SSL: Breve histórico</h1><p>Pontos principais de um protocolo seguro:</p>
+
+<ol>
+  <li>Sigilo: a informação não será lida por terceiros.</li>
+  <li>Integridade: a informação não será adulterada.</li>
+  <li>Altenticidade: os pontos da comunicação serão verificados.</li>
+  <li>Disponibilidade: proteção a DoS, etc.</li>
+  <li>Anonimato.</li>
+</ol>
+
+<p>No <a href="https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf">caso do SSL/TLS</a>:</p>
+
+<ol>
+  <li>Sigilo: Bulk Encryption e troca de chaves: RSA or Diffie-Hellman (usem DHE!)</li>
+  <li>Integridade: MAC Digest (hash)</li>
+  <li>Autenticidade: Certificados</li>
+</ol>
+
+
+</div>
+<div class='slide '>
+<h1 id="ssl">SSL</h1><ul>
+  <li>HSTS</li>
+  <li>CipherSuite e Perfect Forward Secrecy</li>
+  <li>Revogação (CRS / OCSP)</li>
+  <li>Autoridades Certificadoras (CAs)</li>
+  <li>Ataques:
+    <ul>
+      <li><a href="http://vincent.bernat.im/en/blog/2011-ssl-dos-mitigation.html">Computational DoS Mitigation (THC)</a></li>
+      <li><a href="http://www.win.tue.nl/hashclash/rogue-ca/">Hashclash (MD5)</a></li>
+      <li><a href="https://wiki.koumbit.net/BeastSecurityAssessment">BEAST</a></li>
+      <li><a href="https://code.google.com/p/littleblackbox/">LittleBlackBox</a>: chaves padrões em dispositivos embarcados!</li>
+    </ul>
+  </li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="autoridades-certificadoras">Autoridades certificadoras</h1><ul>
+  <li>Sistema PKI em x509 (ITU-T - 1998): atrela uma chave pública a um nome (domínio, email, etc)</li>
+  <li>2009: <a href="https://ssl.netcraft.com/ssl-sample-report">Relatório da Netcraft</a></li>
+  <li>2010: Verisign: operação de CA vendida por US$1.28 bi para a Symantec</li>
+  <li>&ldquo;Two big to fail&rdquo;</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="netcraft-2009">Netcraft (2009)</h1><div class="centered">
+  <p><img src="images/netcraft-ssl-timeline.png" alt="Netcraft - Linha do Tempo" />
+<img src="images/netcraft-ssl-pizza.png" alt="Netcraft - Fatias do Bolo" /></p>
+</div>
+
+
+</div>
+<div class='slide '>
+<h1 id="como-me-torno-uma-autoridade-certificadora">Como me torno uma autoridade certificadora?</h1><p>Depende dos processos de inclusão</p>
+
+<ul>
+  <li>Pelo fabricante da aplicação ou biblioteca</li>
+  <li>Pelo distribuidor da aplicação ou biblioteca</li>
+  <li>O usuário pode incluir manualmente</li>
+</ul>
+
+<p>Quanto mais upstream for a inclusão, maior a ubiquidade. Certificados não-instalados
+são considerados como autoassinados.</p>
+
+<ul>
+  <li>Exemplo: o caso do http://www.cacert.org, uma CA Comunitária</li>
+  <li>Mozilla: https://www.mozilla.org/projects/security/certs/included/</li>
+  <li>ICP-Brasil: http://www.iti.gov.br/twiki/bin/view/Certificacao/WebHome</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="ca-procedimentos">CA: Procedimentos</h1><ul>
+  <li>Mozilla - https://wiki.mozilla.org/CA:How_to_apply</li>
+  <li>Opera - http://www.opera.com/docs/ca/</li>
+  <li>M$ - http://technet.microsoft.com/en-us/library/cc751157.aspx (desatualizado)</li>
+  <li>Safari - https://www.apple.com/certificateauthority/ca_program.html</li>
+  <li>Google - ?</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="ca-em-geral">CA: Em geral</h1><ul>
+  <li>Há pouca transparência na relação entre CAs e fabricantes de software</li>
+  <li>Sem gestão multissetorial</li>
+  <li>Admins de instituições pequenas não tem outra escolha senão utilizar esses CAs</li>
+  <li>As CAs são confiadas exatamente por serem CAs. Onde está a abertura das auditorias?</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="obteno-de-um-certificado-assinado">Obtenção de um certificado assinado</h1><pre><code>           ________ 
+          |        |
+       ___|   CA   |--.
+      /   |________|   \ 2
+     ^        |         : 
+   1 |        | 3       v   
+ ____|____    v     __________
+|         |   |    |          |
+|  Admin  |__/     | Servidor |
+|_________|        |__________|
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="situao-atual">Situação atual</h1><ul>
+  <li>Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?</li>
+  <li><a href="http://www.thoughtcrime.org/software/sslsniff">sslsnif</a></li>
+  <li>Maus hábitos de sysadmins geram falsa sensação de segurança</li>
+  <li>Bypass da tela de &ldquo;conexão não-confiável&rdquo;</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="casos-reais">Casos reais</h1><p>&ldquo;Crime maior do que roubar uma CA é fundar uma CA&rdquo; - Bertold Brecha</p>
+
+<ul>
+  <li><a href="http://it.slashdot.org/story/08/12/23/0046258">Comodogate</a>: mail.google.com, addons.mozilla.org, login.skype.com, etc.</li>
+  <li><a href="http://www.f-secure.com/weblog/archives/00002228.html">DigiNotar</a>: certificados falsos da CIA, MI6 e Mossad (<a href="http://www.networking4all.com/en/ssl+certificates/ssl+news/time-line+for+the+diginotar+hack/">timeline</a>).</li>
+  <li><a href="https://www.eff.org/observatory">The EFF SSL Observatory</a> (<a href="http://events.ccc.de/congress/2010/Fahrplan/events/4121.en.html">27c3</a>)</li>
+  <li>A situação é alarmante: basta apenas que um único CA seja comprometido para ruir toda a infraestrutura.</li>
+  <li>SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/VPN/etc também sofrem dessas vulnerabilidades.</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="o-que--preciso-para-interceptar-conexo-ssl">O que é preciso para interceptar conexão SSL?</h1><ol>
+  <li>Certificado falso.</li>
+  <li>Meios efetivos de um MITM:
+    <ul>
+      <li>DNS poisoning apontando requisições para servidores maliciosos.</li>
+      <li>Redirecionamento de tráfego via BGP.</li>
+      <li>Acesso físico à rede.</li>
+    </ul>
+  </li>
+</ol>
+
+
+</div>
+<div class='slide '>
+<h1 id="conexo-ssl">Conexão SSL</h1><pre><code> _______________ 
+|               |
+|   CA (local)  |
+|_______________|
+     |
+     ^ 3
+ ____|____       2        __________
+|         |------&lt;-------|          |
+| Cliente |              | Servidor |
+|_________|------&gt;-------|__________|
+                 1  
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="mitm">MITM</h1><pre><code>           ________ 
+          |        |
+       .-&gt;|  MITM  |-&lt;.
+      /   |________|   \
+     |                  |
+     v                  v 
+ ____|____          ____|_____
+|         |        |          |
+| Cliente |---X----| Servidor |
+|_________|        |__________|
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="mas-o-quanto-disso--factvel">Mas o quanto disso é factível?</h1><ul>
+  <li>Oriente médio: &hellip;</li>
+  <li>EUA: <a href="https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T">NSA warrantless surveillance controversy</a></li>
+  <li>Brasil: <a href="http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil">Massive DNS poisoning attacks in Brazil</a></li>
+</ul>
+
+<p>A falha atinge de pequenos provedores até grandes porções da internet. O ataque é o mesmo, variando
+apenas a capacidade do atacante.</p>
+
+
+</div>
+<div class='slide '>
+<h1 id="mitigao">Mitigação</h1><p>Recentemente foram propostas várias formas de mitigação:</p>
+
+<ul>
+  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search">Certificate Patrol</a>: muito útil porém sofre to problema de &ldquo;bootstrapping&rdquo;.</li>
+  <li>IETF:
+    <ul>
+      <li><a href="https://www.ietf.org/id/draft-evans-palmer-key-pinning-00.txt">Public Key Pinning Extension for HTTP</a>: também sofre do &ldquo;problema de bootstrapping&rdquo;.</li>
+      <li><a href="http://tools.ietf.org/html/draft-ietf-dane-protocol-12">DNSSEC/DANE</a>: aumenta ainda mais a centralidade do DNS e apenas muda o problema de lugar.</li>
+      <li><a href="https://tools.ietf.org/html/draft-hallambaker-donotissue-03">CAA</a></li>
+      <li><a href="https://tools.ietf.org/html/draft-hoffman-server-has-tls-04">HASTLS</a></li>
+    </ul>
+  </li>
+  <li><a href="https://www.eff.org/deeplinks/2011/11/sovereign-keys-proposal-make-https-and-email-more-secure">Sovereign Keys (EFF)</a></li>
+  <li>Google:
+    <ul>
+      <li><a href="http://tech.slashdot.org/story/11/11/29/2226211/google-researchers-propose-plan-to-fix-ca-system">Certificate Authority Transparency and Auditability</a></li>
+      <li><a href="http://googleonlinesecurity.blogspot.com/2011/04/improving-ssl-certificate-security.html">Google Certificate Catalog</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="alternativas">Alternativas?</h1><p>A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
+é importante considerar que <em>o modelo atual de certificação não é mandatório.</em> Ao invés disso, o modelo
+de CAs pode ser <em>plugável.</em></p>
+
+
+</div>
+<div class='slide '>
+<h1 id="convergence">Convergence</h1><ul>
+  <li>http://convergence.io</li>
+  <li><a href="http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall">Add-on para firefox</a></li>
+  <li>Precedido pelo Perspectives (http://perspectives-project.org)</li>
+  <li>&ldquo;Trust agility&rdquo;</li>
+  <li>Problemas:
+    <ul>
+      <li>Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.</li>
+      <li>Mudanças de chaves.</li>
+    </ul>
+  </li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="funcionamento">Funcionamento</h1><pre><code> _______________     5 cert
+|               |----&lt;----.
+| Notary server |          \
+|_______________|----&gt;---.  \
+  |  |               4    \  \
+6 v  ^ 3 h+fp              \  \
+ _|__|____        2 cert  __\__\____
+|         |------&lt;-------|          |
+| Cliente |              | Servidor |
+|_________|------&gt;-------|__________|
+                 1  
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="bundles">Bundles</h1><pre><code>                     ____      
+            .-----&lt;-|    | 
+            |  .--&gt;-| N1 |&lt;
+ ___________|_|_    |____| \
+|               |    ____   \
+| Notary proxy  |-&gt;-|    |   \
+|_______________|-&lt;-| N2 |&lt;.  \
+      |  |          |____|  \  \
+      v  ^            .      \  \
+      |  |            .       \  \
+      |  |            .        \  \
+      v  ^           ____       \  \
+      |  |          |    |       \  \
+      |  |          | Nn |        \  .
+      v  ^          |____|-&lt;--&gt;.   . |
+   ___|__|__                   _\__v_v___
+  |         |------&lt;----------|          |
+  | Cliente |                 | Servidor |
+  |_________|------&gt;----------|__________|
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="monkeysphere">Monkeysphere</h1><ul>
+  <li>http://web.monkeysphere.info</li>
+  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search">Add-on pra firefox</a></li>
+  <li>Atrela a autenticação à identificações pessoais pela Web Of Trust</li>
+  <li>Também provê autorização</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="i---estabelecimento-de-confiana-entre-pessoas">I - Estabelecimento de confiança entre pessoas</h1><pre><code> ________       ________
+|        |--&gt;--|        |
+| Admin  |     |  User  |
+|________|--&gt;--|________|
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="ii---assinatura-de-chave-do-servidor">II - Assinatura de chave do servidor</h1><pre><code> ___________
+|           |
+| Keyserver | 
+|___________|
+     |
+     ^ 3
+ ____|____       2        __________
+|         |------&lt;-------|          |
+|  Admin  |              | Servidor |
+|_________|------&gt;-------|__________|
+                 1  
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="iii---conexo-ssl">III - Conexão SSL</h1><pre><code> ___________
+|           |
+| Keyserver | 
+|___________|
+     |
+     ^ 3
+ ____|____       2        __________
+|         |------&lt;-------|          |
+|   User  |              | Servidor |
+|_________|------&gt;-------|__________|
+                 1  
+</code></pre>
+
+
+</div>
+<div class='slide '>
+<h1 id="integrao">Integração</h1><ul>
+  <li>O Monkeysphere ainda é muito geeky porém oferece um nível de segurança muito mais alto
+para a verificação de certificados; o código está maduro porém é preciso muito mais desenvolvimento
+de UI e usabilidade.</li>
+  <li>O Convergence pode utilizar como backend o Monkeysphere, o que pode reduzir o problema do MITM
+upstream.</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="perspectivas">Perspectivas</h1><ul>
+  <li>
+    <p>A indústria sabe que o modelo de CAs está falido, mas ainda assim existe uma insistência
+em dizer que o problema são as &ldquo;maçãs podres&rdquo; ou o excesso de CAs.</p>
+  </li>
+  <li>
+    <p>Os fabricantes de navegadores tem peso maior na decisão, porém dificilmente farão mudanças bruscas uma vez que a internet hoje é muito dependente na infraestrutura de CAs.</p>
+  </li>
+  <li>
+    <p>A pluralidade de métodos e a <em>plugalidade</em> (:P) de soluções podem convergir num esquema de validação híbrido.</p>
+  </li>
+  <li>
+    <p>Conscientização do público é fundamental.</p>
+  </li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="demonstraes">Demonstrações</h1><ul>
+  <li>Monkeysphere</li>
+  <li>Convergence</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="perguntas">Perguntas?</h1></div>
+
+
+  </div> <!-- presentation -->
+</body>
+</html> 
+

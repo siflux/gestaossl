@@ -1,8 +1,27 @@
-Convergence e Monkeysphere: chaves para gestão SSL distribuída
-==============================================================
+Title: Convergence e Monkeysphere: chaves para gestão SSL distribuída
+Author: Silvio
+Generator: S9
 
-Conferência O Outro Lado Edição 2
----------------------------------
+%css 
+
+body {
+  font-family: monospace;
+}
+  
+.centered img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered {
+  text-align: center;
+}
+
+%end
+
+Convergence e Monkeysphere: chaves para gestão SSL distribuída - Co0l - Ed. 2
+=============================================================================
 
 [Convergence](http://convergence.io) e
 [Monkeysphere](http://web.monkeysphere.info): duas alternativas viáveis para
@@ -10,7 +29,7 @@ substituir ou complementar o atual cartel das Autoridades Certificadoras
 utilizadas na pilha SSL/TLS.
 
 Propósito
----------
+=========
 
 De 2008 até o momento, foram reveladas falhas fundamentais em vários protocolos
 básicos da internet:
@@ -23,7 +42,7 @@ Estamos falando de falhas de especificação e não de implementação ou DoS, o
 mais difícil de mitigar.
 
 SSL: Breve histórico
---------------------
+====================
 
 Pontos principais de um protocolo seguro:
 
@@ -40,7 +59,7 @@ No [caso do SSL/TLS](https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activist
   3. Autenticidade: Certificados
 
 SSL
----
+===
 
 - HSTS
 - CipherSuite e Perfect Forward Secrecy
@@ -53,15 +72,24 @@ SSL
   - [LittleBlackBox](https://code.google.com/p/littleblackbox/): chaves padrões em dispositivos embarcados!
 
 Autoridades certificadoras
---------------------------
+==========================
 
 - Sistema PKI em x509 (ITU-T - 1998): atrela uma chave pública a um nome (domínio, email, etc)
 - 2009: [Relatório da Netcraft](https://ssl.netcraft.com/ssl-sample-report)
 - 2010: Verisign: operação de CA vendida por US$1.28 bi para a Symantec
 - "Two big to fail"
 
+
+Netcraft (2009)
+===============
+
+<div class="centered" markdown="1">
+![Netcraft - Linha do Tempo](images/netcraft-ssl-timeline.png)
+![Netcraft - Fatias do Bolo](images/netcraft-ssl-pizza.png)
+</div>
+
 Como me torno uma autoridade certificadora?
--------------------------------------------
+===========================================
 
 Depende dos processos de inclusão
 
@@ -76,7 +104,8 @@ são considerados como autoassinados.
 - Mozilla: https://www.mozilla.org/projects/security/certs/included/
 - ICP-Brasil: http://www.iti.gov.br/twiki/bin/view/Certificacao/WebHome
 
-Procedimentos
+CA: Procedimentos
+=================
 
 - Mozilla - https://wiki.mozilla.org/CA:How_to_apply
 - Opera - http://www.opera.com/docs/ca/
@@ -84,7 +113,8 @@ Procedimentos
 - Safari - https://www.apple.com/certificateauthority/ca_program.html
 - Google - ?
 
-Em geral
+CA: Em geral
+============
 
 - Há pouca transparência na relação entre CAs e fabricantes de software
 - Sem gestão multissetorial
@@ -92,7 +122,7 @@ Em geral
 - As CAs são confiadas exatamente por serem CAs. Onde está a abertura das auditorias?
 
 Obtenção de um certificado assinado
------------------------------------
+===================================
 
                ________ 
               |        |
@@ -107,7 +137,7 @@ Obtenção de um certificado assinado
 
 
 Situação atual
---------------
+==============
 
 - Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?
 - [sslsnif](http://www.thoughtcrime.org/software/sslsniff)
@@ -115,7 +145,7 @@ Situação atual
 - Bypass da tela de "conexão não-confiável"
 
 Casos reais
------------
+===========
 
 "Crime maior do que roubar uma CA é fundar uma CA" - Bertold Brecha
 
@@ -126,7 +156,7 @@ Casos reais
 - SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/VPN/etc também sofrem dessas vulnerabilidades.
 
 O que é preciso para interceptar conexão SSL?
----------------------------------------------
+=============================================
 
 1. Certificado falso.
 2. Meios efetivos de um MITM:
@@ -136,7 +166,7 @@ O que é preciso para interceptar conexão SSL?
 
 
 Conexão SSL
-------------
+============
 
      _______________ 
     |               |
@@ -151,7 +181,7 @@ Conexão SSL
                      1  
 
 MITM
-----
+====
 
                ________ 
               |        |
@@ -166,7 +196,7 @@ MITM
 
 
 Mas o quanto disso é factível?
-------------------------------
+==============================
 
 - Oriente médio: ...
 - EUA: [NSA warrantless surveillance controversy](https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T)
@@ -176,7 +206,7 @@ A falha atinge de pequenos provedores até grandes porções da internet. O ataq
 apenas a capacidade do atacante.
 
 Mitigação
----------
+=========
 
 Recentemente foram propostas várias formas de mitigação:
 
@@ -192,23 +222,25 @@ Recentemente foram propostas várias formas de mitigação:
   - [Google Certificate Catalog](http://googleonlinesecurity.blogspot.com/2011/04/improving-ssl-certificate-security.html)
 
 Alternativas?
--------------
+=============
 
 A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
 é importante considerar que _o modelo atual de certificação não é mandatório._ Ao invés disso, o modelo
 de CAs pode ser _plugável._
 
-Convegence
-----------
+Convergence
+===========
 
 - http://convergence.io
 - [Add-on para firefox](http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall)
 - Precedido pelo Perspectives (http://perspectives-project.org)
 - "Trust agility"
-- Problema: se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.
+- Problemas:
+  - Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.
+  - Mudanças de chaves.
 
 Funcionamento
--------------
+=============
 
      _______________     5 cert
     |               |----<----.
@@ -223,7 +255,7 @@ Funcionamento
                      1  
 
 Bundles
--------
+=======
 
                          ____      
                 .-----<-|    | 
@@ -247,7 +279,7 @@ Bundles
                        
 
 Monkeysphere
-------------
+============
 
 - http://web.monkeysphere.info
 - [Add-on pra firefox](https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search)
@@ -255,7 +287,7 @@ Monkeysphere
 - Também provê autorização
 
 I - Estabelecimento de confiança entre pessoas
-----------------------------------------------
+==============================================
 
      ________       ________
     |        |-->--|        |
@@ -264,7 +296,7 @@ I - Estabelecimento de confiança entre pessoas
 
 
 II - Assinatura de chave do servidor
-------------------------------------
+====================================
 
      ___________
     |           |
@@ -279,7 +311,7 @@ II - Assinatura de chave do servidor
                      1  
 
 III - Conexão SSL
------------------
+=================
 
      ___________
     |           |
@@ -292,14 +324,9 @@ III - Conexão SSL
     |   User  |              | Servidor |
     |_________|------>-------|__________|
                      1  
-Demonstrações
--------------
-
-- Monkeysphere
-- Convergence
 
 Integração
-----------
+==========
 
 - O Monkeysphere ainda é muito geeky porém oferece um nível de segurança muito mais alto
   para a verificação de certificados; o código está maduro porém é preciso muito mais desenvolvimento
@@ -308,7 +335,7 @@ Integração
   upstream.
 
 Perspectivas
-------------
+============
 
 - A indústria sabe que o modelo de CAs está falido, mas ainda assim existe uma insistência
   em dizer que o problema são as "maçãs podres" ou o excesso de CAs.
@@ -319,3 +346,11 @@ Perspectivas
 
 - Conscientização do público é fundamental.
 
+Demonstrações
+=============
+
+- Monkeysphere
+- Convergence
+
+Perguntas?
+=========
