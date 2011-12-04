@@ -23,10 +23,8 @@ body {
 Convergence e Monkeysphere: chaves para gestão SSL distribuída - Co0l - Ed. 2
 =============================================================================
 
-[Convergence](http://convergence.io) e
-[Monkeysphere](http://web.monkeysphere.info): duas alternativas viáveis para
-substituir ou complementar o atual cartel das Autoridades Certificadoras
-utilizadas na pilha SSL/TLS.
+Duas alternativas viáveis para substituir ou complementar o atual cartel das
+Autoridades Certificadoras utilizadas na pilha SSL/TLS.
 
 Propósito
 =========
@@ -54,19 +52,22 @@ Pontos principais de um protocolo seguro:
 
 No [caso do SSL/TLS](https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf):
 
-  1. Sigilo: Bulk Encryption e troca de chaves: RSA or Diffie-Hellman (usem DHE!)
+  1. Sigilo:
+     - Criptografia usando chaves assimétricas.
+     - Troca de chaves: RSA or Diffie-Hellman (usem DHE!)
   2. Integridade: MAC Digest (hash)
   3. Autenticidade: Certificados
 
 SSL
 ===
 
+- Encapsulamento de outros protocolos
 - HTTP Strict Transport Security - HSTS
 - CipherSuite e Perfect Forward Secrecy
-- Revogação (CRS / OCSP)
+- Revogação (CRL / OCSP)
 - Autoridades Certificadoras (CAs)
 - Ataques:
-  - [Computational DoS Mitigation (THC)](http://vincent.bernat.im/en/blog/2011-ssl-dos-mitigation.html)
+  - [SSL Computational DoS (THC)](http://www.thc.org/thc-ssl-dos/)
   - [Hashclash (MD5)](http://www.win.tue.nl/hashclash/rogue-ca/)
   - [BEAST](https://wiki.koumbit.net/BeastSecurityAssessment)
   - [LittleBlackBox](https://code.google.com/p/littleblackbox/): chaves padrões em dispositivos embarcados!
@@ -112,14 +113,17 @@ CA: Procedimentos
 - Opera - http://www.opera.com/docs/ca/
 - M$ - http://technet.microsoft.com/en-us/library/cc751157.aspx (desatualizado)
 - Safari - https://www.apple.com/certificateauthority/ca_program.html
-- Chromiun - [NSS](http://code.google.com/p/chromium/wiki/LinuxCertManagement) (GNU/Linux)
+- Chromium - [NSS](http://code.google.com/p/chromium/wiki/LinuxCertManagement) (GNU/Linux)
 
 CA: Em geral
 ============
 
 - Há pouca transparência na relação entre CAs e fabricantes de software
+
 - Sem gestão multissetorial
+
 - Admins de instituições pequenas não tem outra escolha senão utilizar esses CAs
+
 - As CAs são confiadas exatamente por serem CAs. Onde está a abertura das auditorias?
 
 Obtenção de um certificado assinado
@@ -145,13 +149,16 @@ Situação atual
     Are you sure you want to continue connecting (yes/no)?
 
 - Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?
+
 - Maus hábitos de sysadmins geram falsa sensação de segurança
+
 - Usabilidade: Bypass da tela de "conexão não-confiável"
 
 Evidências de cooperação
 ========================
 
   - [Certified Lies: Detecting and Defeating Government Interception Attacks Against SSL](http://web.monkeysphere.info/news/CA_Cooperation_with_Governments/): _evidence that CAs may be cooperating with government agencies to help them spy undetected on "secure" encrypted communications_
+
   - [Man-in-the-Middle Attacks Against SSL](https://www.schneier.com/blog/archives/2010/04/man-in-the-midd_2.html): _a new attack, the compelled certificate creation attack, in which government agencies compel a certificate authority to issue false SSL certificates that are then used by intelligence agencies to covertly intercept and hijack individuals' secure Web-based communications._
 
 Casos reais
@@ -160,15 +167,20 @@ Casos reais
 % "Crime maior do que roubar uma CA é fundar uma CA" - Bertold Brecha
 
 - [Comodogate](http://it.slashdot.org/story/08/12/23/0046258): mail.google.com, addons.mozilla.org, login.skype.com, etc.
+
 - [DigiNotar](http://www.f-secure.com/weblog/archives/00002228.html): certificados falsos da CIA, MI6 e Mossad ([timeline](http://www.networking4all.com/en/ssl+certificates/ssl+news/time-line+for+the+diginotar+hack/)).
+
 - [The EFF SSL Observatory](https://www.eff.org/observatory) ([27c3](http://events.ccc.de/congress/2010/Fahrplan/events/4121.en.html))
+
 - A situação é alarmante: basta apenas que um único CA seja comprometido para ruir toda a infraestrutura.
+
 - SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/VPN/etc também sofrem dessas vulnerabilidades.
 
 O que é preciso para interceptar conexão SSL?
 =============================================
 
 1. Certificado falso.
+
 2. Meios efetivos de um MITM:
    - DNS poisoning apontando requisições para servidores maliciosos.
    - Redirecionamento de tráfego via BGP.
@@ -207,11 +219,16 @@ MITM
 Mas o quanto disso é factível?
 ==============================
 
-- Oriente médio: [The Internet's Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked](http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html)
+- Oriente médio:
+  - [The Internet's Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked](http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html) (Cybertrust / Verizon)
+  - [Iran's Web Spying Aided By Western Technology ](http://online.wsj.com/article/SB124562668777335653.html#mod=rss_whats_news_us) (Nokia-Siemens)
+  - [Out of Egypt Censorship, US Tech Export Under Fire](http://yro.slashdot.org/story/11/02/11/1920258/Out-of-Egypt-Censorship-US-Tech-Export-Under-Fire) (Narus)
+
 - EUA: [NSA warrantless surveillance controversy](https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T)
+
 - Brasil: [Massive DNS poisoning attacks in Brazil](http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil)
 
-A falha atinge de pequenos provedores até grandes porções da internet. O ataque é o mesmo, variando
+Pequenos provedores até grandes porções da internet podem ser afetados. O ataque é o mesmo, variando
 apenas a capacidade do atacante.
 
 Mitigação

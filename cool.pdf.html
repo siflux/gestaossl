@@ -70,10 +70,8 @@ for princexml (CSS3 paged media support)
 <div class="presentation">
 
 <div class='slide '>
-<h1 id="convergence-e-monkeysphere-chaves-para-gesto-ssl-distribuda---co0l---ed-2">Convergence e Monkeysphere: chaves para gestão SSL distribuída - Co0l - Ed. 2</h1><p><a href="http://convergence.io">Convergence</a> e
-<a href="http://web.monkeysphere.info">Monkeysphere</a>: duas alternativas viáveis para
-substituir ou complementar o atual cartel das Autoridades Certificadoras
-utilizadas na pilha SSL/TLS.</p>
+<h1 id="convergence-e-monkeysphere-chaves-para-gesto-ssl-distribuda---co0l---ed-2">Convergence e Monkeysphere: chaves para gestão SSL distribuída - Co0l - Ed. 2</h1><p>Duas alternativas viáveis para substituir ou complementar o atual cartel das
+Autoridades Certificadoras utilizadas na pilha SSL/TLS.</p>
 
 
 </div>
@@ -106,7 +104,12 @@ mais difícil de mitigar.</p>
 <p>No <a href="https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf">caso do SSL/TLS</a>:</p>
 
 <ol>
-  <li>Sigilo: Bulk Encryption e troca de chaves: RSA or Diffie-Hellman (usem DHE!)</li>
+  <li>Sigilo:
+    <ul>
+      <li>Criptografia usando chaves assimétricas.</li>
+      <li>Troca de chaves: RSA or Diffie-Hellman (usem DHE!)</li>
+    </ul>
+  </li>
   <li>Integridade: MAC Digest (hash)</li>
   <li>Autenticidade: Certificados</li>
 </ol>
@@ -115,13 +118,14 @@ mais difícil de mitigar.</p>
 </div>
 <div class='slide '>
 <h1 id="ssl">SSL</h1><ul>
+  <li>Encapsulamento de outros protocolos</li>
   <li>HTTP Strict Transport Security - HSTS</li>
   <li>CipherSuite e Perfect Forward Secrecy</li>
-  <li>Revogação (CRS / OCSP)</li>
+  <li>Revogação (CRL / OCSP)</li>
   <li>Autoridades Certificadoras (CAs)</li>
   <li>Ataques:
     <ul>
-      <li><a href="http://vincent.bernat.im/en/blog/2011-ssl-dos-mitigation.html">Computational DoS Mitigation (THC)</a></li>
+      <li><a href="http://www.thc.org/thc-ssl-dos/">SSL Computational DoS (THC)</a></li>
       <li><a href="http://www.win.tue.nl/hashclash/rogue-ca/">Hashclash (MD5)</a></li>
       <li><a href="https://wiki.koumbit.net/BeastSecurityAssessment">BEAST</a></li>
       <li><a href="https://code.google.com/p/littleblackbox/">LittleBlackBox</a>: chaves padrões em dispositivos embarcados!</li>
@@ -177,17 +181,25 @@ são considerados como autoassinados.</p>
   <li>Opera - http://www.opera.com/docs/ca/</li>
   <li>M$ - http://technet.microsoft.com/en-us/library/cc751157.aspx (desatualizado)</li>
   <li>Safari - https://www.apple.com/certificateauthority/ca_program.html</li>
-  <li>Chromiun - <a href="http://code.google.com/p/chromium/wiki/LinuxCertManagement">NSS</a> (GNU/Linux)</li>
+  <li>Chromium - <a href="http://code.google.com/p/chromium/wiki/LinuxCertManagement">NSS</a> (GNU/Linux)</li>
 </ul>
 
 
 </div>
 <div class='slide '>
 <h1 id="ca-em-geral">CA: Em geral</h1><ul>
-  <li>Há pouca transparência na relação entre CAs e fabricantes de software</li>
-  <li>Sem gestão multissetorial</li>
-  <li>Admins de instituições pequenas não tem outra escolha senão utilizar esses CAs</li>
-  <li>As CAs são confiadas exatamente por serem CAs. Onde está a abertura das auditorias?</li>
+  <li>
+    <p>Há pouca transparência na relação entre CAs e fabricantes de software</p>
+  </li>
+  <li>
+    <p>Sem gestão multissetorial</p>
+  </li>
+  <li>
+    <p>Admins de instituições pequenas não tem outra escolha senão utilizar esses CAs</p>
+  </li>
+  <li>
+    <p>As CAs são confiadas exatamente por serem CAs. Onde está a abertura das auditorias?</p>
+  </li>
 </ul>
 
 
@@ -214,36 +226,59 @@ Are you sure you want to continue connecting (yes/no)?
 </code></pre>
 
 <ul>
-  <li>Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?</li>
-  <li>Maus hábitos de sysadmins geram falsa sensação de segurança</li>
-  <li>Usabilidade: Bypass da tela de &ldquo;conexão não-confiável&rdquo;</li>
+  <li>
+    <p>Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?</p>
+  </li>
+  <li>
+    <p>Maus hábitos de sysadmins geram falsa sensação de segurança</p>
+  </li>
+  <li>
+    <p>Usabilidade: Bypass da tela de &ldquo;conexão não-confiável&rdquo;</p>
+  </li>
 </ul>
 
 
 </div>
 <div class='slide '>
 <h1 id="evidncias-de-cooperao">Evidências de cooperação</h1><ul>
-  <li><a href="http://web.monkeysphere.info/news/CA_Cooperation_with_Governments/">Certified Lies: Detecting and Defeating Government Interception Attacks Against SSL</a>: <em>evidence that CAs may be cooperating with government agencies to help them spy undetected on &ldquo;secure&rdquo; encrypted communications</em></li>
-  <li><a href="https://www.schneier.com/blog/archives/2010/04/man-in-the-midd_2.html">Man-in-the-Middle Attacks Against SSL</a>: <em>a new attack, the compelled certificate creation attack, in which government agencies compel a certificate authority to issue false SSL certificates that are then used by intelligence agencies to covertly intercept and hijack individuals&rsquo; secure Web-based communications.</em></li>
+  <li>
+    <p><a href="http://web.monkeysphere.info/news/CA_Cooperation_with_Governments/">Certified Lies: Detecting and Defeating Government Interception Attacks Against SSL</a>: <em>evidence that CAs may be cooperating with government agencies to help them spy undetected on &ldquo;secure&rdquo; encrypted communications</em></p>
+  </li>
+  <li>
+    <p><a href="https://www.schneier.com/blog/archives/2010/04/man-in-the-midd_2.html">Man-in-the-Middle Attacks Against SSL</a>: <em>a new attack, the compelled certificate creation attack, in which government agencies compel a certificate authority to issue false SSL certificates that are then used by intelligence agencies to covertly intercept and hijack individuals&rsquo; secure Web-based communications.</em></p>
+  </li>
 </ul>
 
 
 </div>
 <div class='slide '>
 <h1 id="casos-reais">Casos reais</h1><ul>
-  <li><a href="http://it.slashdot.org/story/08/12/23/0046258">Comodogate</a>: mail.google.com, addons.mozilla.org, login.skype.com, etc.</li>
-  <li><a href="http://www.f-secure.com/weblog/archives/00002228.html">DigiNotar</a>: certificados falsos da CIA, MI6 e Mossad (<a href="http://www.networking4all.com/en/ssl+certificates/ssl+news/time-line+for+the+diginotar+hack/">timeline</a>).</li>
-  <li><a href="https://www.eff.org/observatory">The EFF SSL Observatory</a> (<a href="http://events.ccc.de/congress/2010/Fahrplan/events/4121.en.html">27c3</a>)</li>
-  <li>A situação é alarmante: basta apenas que um único CA seja comprometido para ruir toda a infraestrutura.</li>
-  <li>SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/VPN/etc também sofrem dessas vulnerabilidades.</li>
+  <li>
+    <p><a href="http://it.slashdot.org/story/08/12/23/0046258">Comodogate</a>: mail.google.com, addons.mozilla.org, login.skype.com, etc.</p>
+  </li>
+  <li>
+    <p><a href="http://www.f-secure.com/weblog/archives/00002228.html">DigiNotar</a>: certificados falsos da CIA, MI6 e Mossad (<a href="http://www.networking4all.com/en/ssl+certificates/ssl+news/time-line+for+the+diginotar+hack/">timeline</a>).</p>
+  </li>
+  <li>
+    <p><a href="https://www.eff.org/observatory">The EFF SSL Observatory</a> (<a href="http://events.ccc.de/congress/2010/Fahrplan/events/4121.en.html">27c3</a>)</p>
+  </li>
+  <li>
+    <p>A situação é alarmante: basta apenas que um único CA seja comprometido para ruir toda a infraestrutura.</p>
+  </li>
+  <li>
+    <p>SSL não se aplica apenas a HTTPS: StartTLS/SMTPS/IMAPS/XMPP/VPN/etc também sofrem dessas vulnerabilidades.</p>
+  </li>
 </ul>
 
 
 </div>
 <div class='slide '>
 <h1 id="o-que--preciso-para-interceptar-conexo-ssl">O que é preciso para interceptar conexão SSL?</h1><ol>
-  <li>Certificado falso.</li>
-  <li>Meios efetivos de um MITM:
+  <li>
+    <p>Certificado falso.</p>
+  </li>
+  <li>
+    <p>Meios efetivos de um MITM:</p>
     <ul>
       <li>DNS poisoning apontando requisições para servidores maliciosos.</li>
       <li>Redirecionamento de tráfego via BGP.</li>
@@ -287,12 +322,20 @@ Are you sure you want to continue connecting (yes/no)?
 </div>
 <div class='slide '>
 <h1 id="mas-o-quanto-disso--factvel">Mas o quanto disso é factível?</h1><ul>
-  <li>Oriente médio: <a href="http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html">The Internet&rsquo;s Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked</a></li>
-  <li>EUA: <a href="https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T">NSA warrantless surveillance controversy</a></li>
+  <li>Oriente médio:
+    <ul>
+      <li><a href="http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html">The Internet&rsquo;s Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked</a> (Cybertrust / Verizon)</li>
+      <li><a href="http://online.wsj.com/article/SB124562668777335653.html#mod=rss_whats_news_us">Iran&rsquo;s Web Spying Aided By Western Technology </a> (Nokia-Siemens)</li>
+      <li><a href="http://yro.slashdot.org/story/11/02/11/1920258/Out-of-Egypt-Censorship-US-Tech-Export-Under-Fire">Out of Egypt Censorship, US Tech Export Under Fire</a> (Narus)</li>
+    </ul>
+  </li>
+  <li>
+    <p>EUA: <a href="https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T">NSA warrantless surveillance controversy</a></p>
+  </li>
   <li>Brasil: <a href="http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil">Massive DNS poisoning attacks in Brazil</a></li>
 </ul>
 
-<p>A falha atinge de pequenos provedores até grandes porções da internet. O ataque é o mesmo, variando
+<p>Pequenos provedores até grandes porções da internet podem ser afetados. O ataque é o mesmo, variando
 apenas a capacidade do atacante.</p>
 
 
