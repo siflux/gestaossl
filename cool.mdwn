@@ -62,7 +62,6 @@ SSL
 ===
 
 - Encapsulamento de outros protocolos
-- HTTP Strict Transport Security - HSTS
 - CipherSuite e Perfect Forward Secrecy
 - Revogação (CRL / OCSP)
 - Autoridades Certificadoras (CAs)
@@ -236,7 +235,8 @@ Mitigação
 
 Recentemente foram propostas várias formas de mitigação:
 
-- [Certificate Patrol](https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search): muito útil porém sofre to problema de "bootstrapping"/secure introduction (Trust On First Use/Persistence of Pseudonym - TOFU/POP).
+- [HTTP Strict Transport Security - HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)
+- [Certificate Patrol](https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search): muito útil porém sofre to problema de secure introduction (Trust On First Use/Persistence of Pseudonym - TOFU/POP).
 - [Certlock](https://code.google.com/p/certlock/)
 - IETF:
   - [Public Key Pinning Extension for HTTP](https://www.ietf.org/id/draft-evans-palmer-key-pinning-00.txt): também sofre do "problema de bootstrapping".
