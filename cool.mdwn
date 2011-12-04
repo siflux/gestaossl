@@ -261,10 +261,15 @@ http://convergence.io
 =====================
 
 - [Add-on para firefox](http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall) + daemon
+
 - Precedido pelo Perspectives (http://perspectives-project.org)
+
 - "Trust agility": usuário/a escolhe em quem confiar e por quanto tempo
+
 - Sistema notarial distribuído e robusto
+
 - Anônimo e com boa usabilidade
+
 - [BlackHat USA 2011: SSL And The Future Of Authenticity](https://www.youtube.com/watch?v=Z7Wl2FW2TcA)
 
 Funcionamento
@@ -310,15 +315,20 @@ Convergence: Problemas
 ======================
 
   - Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber
+
   - Mudanças de chaves
+
   - The Citibank Problem
+
   - Futuro: [TACK (Tethered Assertions for Certificate Keys)](https://github.com/moxie0/Convergence/wiki/TACK): similar às Chaves Soberanas da EFF
 
 http://web.monkeysphere.info
 ============================
 
-- [Add-on pra firefox](https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search) + agent
+- [Add-on pra firefox](https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search) + agent + userland
+
 - Atrela a autenticação à identificações pessoais pela Web Of Trust
+
 - Também provê autorização
 
 I - Estabelecimento de confiança entre pessoas
@@ -366,7 +376,9 @@ Web of Trust
 ============
 
   - Identificação.
+
   - Confiabilidade.
+
   - Mesmo que um usuário não tenha identificado um admin que assinou a chave de um servidor,
     confiabilidade ainda pode ser estabelecida por meios indiretos.
 
@@ -376,6 +388,7 @@ Integração
 - O Monkeysphere ainda é muito geeky porém oferece um nível de segurança muito mais alto
   para a verificação de certificados; o código está maduro porém é preciso muito mais desenvolvimento
   de UI e usabilidade, além de depender de uma grande WoT para ser eficaz.
+
 - O Convergence pode utilizar como backend o Monkeysphere, o que pode reduzir o problema do MITM
   upstream.
 
