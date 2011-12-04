@@ -76,6 +76,7 @@ Autoridades certificadoras
 ==========================
 
 - Sistema PKI em x509 (ITU-T - 1998): atrela uma chave pública a um nome (domínio, email, etc)
+- Árvore hierárquica de certificação
 - 2009: [Relatório da Netcraft](https://ssl.netcraft.com/ssl-sample-report)
 - 2010: Verisign: operação de CA vendida por US$1.28 bi para a Symantec
 - "Two big to fail"
