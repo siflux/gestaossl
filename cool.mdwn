@@ -222,6 +222,7 @@ Mas o quanto disso é factível?
   - [The Internet's Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked](http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html) (Cybertrust / Verizon)
   - [Iran's Web Spying Aided By Western Technology ](http://online.wsj.com/article/SB124562668777335653.html#mod=rss_whats_news_us) (Nokia-Siemens)
   - [Out of Egypt Censorship, US Tech Export Under Fire](http://yro.slashdot.org/story/11/02/11/1920258/Out-of-Egypt-Censorship-US-Tech-Export-Under-Fire) (Narus)
+  - [A Syrian Man-In-The-Middle Attack against Facebook](https://www.eff.org/deeplinks/2011/05/syrian-man-middle-against-facebook)
 
 - EUA: [NSA warrantless surveillance controversy](https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T)
 
@@ -251,9 +252,10 @@ Recentemente foram propostas várias formas de mitigação:
 Alternativas?
 =============
 
-A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
-é importante considerar que _o modelo atual de certificação não é mandatório._ Ao invés disso, o modelo
-de CAs pode ser _plugável._
+- A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
+é importante considerar que _o modelo atual de certificação não é mandatório._
+
+- Ao invés disso, o modelo de CAs pode ser _plugável_ e explorar características _locais_ e _globais._
 
 http://convergence.io
 =====================
@@ -263,6 +265,7 @@ http://convergence.io
 - "Trust agility": usuário/a escolhe em quem confiar e por quanto tempo
 - Sistema notarial distribuído e robusto
 - Anônimo e com boa usabilidade
+- [BlackHat USA 2011: SSL And The Future Of Authenticity](https://www.youtube.com/watch?v=Z7Wl2FW2TcA)
 
 Funcionamento
 =============
@@ -306,9 +309,10 @@ Bundles
 Convergence: Problemas
 ======================
 
-  - Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.
-  - Mudanças de chaves.
+  - Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber
+  - Mudanças de chaves
   - The Citibank Problem
+  - Futuro: [TACK (Tethered Assertions for Certificate Keys)](https://github.com/moxie0/Convergence/wiki/TACK): similar às Chaves Soberanas da EFF
 
 http://web.monkeysphere.info
 ============================
@@ -383,7 +387,7 @@ Perspectivas
 
 - Os fabricantes de navegadores tem peso maior na decisão, porém dificilmente farão mudanças bruscas uma vez que a internet hoje é muito dependente na infraestrutura de CAs.
 
-- A pluralidade de métodos e a _plugalidade_ (:P) de soluções podem convergir num esquema de validação híbrido.
+- A pluralidade de métodos e a _plugalidade_ (:P) de soluções podem _convergir_ num esquema de validação híbrido.
 
 - Conscientização do público é fundamental.
 

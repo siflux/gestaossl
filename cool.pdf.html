@@ -119,7 +119,6 @@ mais difícil de mitigar.</p>
 <div class='slide '>
 <h1 id="ssl">SSL</h1><ul>
   <li>Encapsulamento de outros protocolos</li>
-  <li>HTTP Strict Transport Security - HSTS</li>
   <li>CipherSuite e Perfect Forward Secrecy</li>
   <li>Revogação (CRL / OCSP)</li>
   <li>Autoridades Certificadoras (CAs)</li>
@@ -327,6 +326,7 @@ Are you sure you want to continue connecting (yes/no)?
       <li><a href="http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html">The Internet&rsquo;s Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked</a> (Cybertrust / Verizon)</li>
       <li><a href="http://online.wsj.com/article/SB124562668777335653.html#mod=rss_whats_news_us">Iran&rsquo;s Web Spying Aided By Western Technology </a> (Nokia-Siemens)</li>
       <li><a href="http://yro.slashdot.org/story/11/02/11/1920258/Out-of-Egypt-Censorship-US-Tech-Export-Under-Fire">Out of Egypt Censorship, US Tech Export Under Fire</a> (Narus)</li>
+      <li><a href="https://www.eff.org/deeplinks/2011/05/syrian-man-middle-against-facebook">A Syrian Man-In-The-Middle Attack against Facebook</a></li>
     </ul>
   </li>
   <li>
@@ -344,7 +344,8 @@ apenas a capacidade do atacante.</p>
 <h1 id="mitigao">Mitigação</h1><p>Recentemente foram propostas várias formas de mitigação:</p>
 
 <ul>
-  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search">Certificate Patrol</a>: muito útil porém sofre to problema de &ldquo;bootstrapping&rdquo;/secure introduction (Trust On First Use/Persistence of Pseudonym - TOFU/POP).</li>
+  <li><a href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">HTTP Strict Transport Security - HSTS</a></li>
+  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search">Certificate Patrol</a>: muito útil porém sofre to problema de secure introduction (Trust On First Use/Persistence of Pseudonym - TOFU/POP).</li>
   <li><a href="https://code.google.com/p/certlock/">Certlock</a></li>
   <li>IETF:
     <ul>
@@ -366,9 +367,15 @@ apenas a capacidade do atacante.</p>
 
 </div>
 <div class='slide '>
-<h1 id="alternativas">Alternativas?</h1><p>A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
-é importante considerar que <em>o modelo atual de certificação não é mandatório.</em> Ao invés disso, o modelo
-de CAs pode ser <em>plugável.</em></p>
+<h1 id="alternativas">Alternativas?</h1><ul>
+  <li>
+    <p>A grande questão é: abandonar o SSL hoje é uma opção que não depende apenas dos/as usuários, porém
+é importante considerar que <em>o modelo atual de certificação não é mandatório.</em></p>
+  </li>
+  <li>
+    <p>Ao invés disso, o modelo de CAs pode ser <em>plugável</em> e explorar características <em>locais</em> e <em>globais.</em></p>
+  </li>
+</ul>
 
 
 </div>
@@ -379,6 +386,7 @@ de CAs pode ser <em>plugável.</em></p>
   <li>&ldquo;Trust agility&rdquo;: usuário/a escolhe em quem confiar e por quanto tempo</li>
   <li>Sistema notarial distribuído e robusto</li>
   <li>Anônimo e com boa usabilidade</li>
+  <li><a href="https://www.youtube.com/watch?v=Z7Wl2FW2TcA">BlackHat USA 2011: SSL And The Future Of Authenticity</a></li>
 </ul>
 
 
@@ -425,9 +433,10 @@ de CAs pode ser <em>plugável.</em></p>
 </div>
 <div class='slide '>
 <h1 id="convergence-problemas">Convergence: Problemas</h1><ul>
-  <li>Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.</li>
-  <li>Mudanças de chaves.</li>
+  <li>Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber</li>
+  <li>Mudanças de chaves</li>
   <li>The Citibank Problem</li>
+  <li>Futuro: <a href="https://github.com/moxie0/Convergence/wiki/TACK">TACK (Tethered Assertions for Certificate Keys)</a>: similar às Chaves Soberanas da EFF</li>
 </ul>
 
 
@@ -515,7 +524,7 @@ em dizer que o problema são as &ldquo;maçãs podres&rdquo; ou o excesso de CAs
     <p>Os fabricantes de navegadores tem peso maior na decisão, porém dificilmente farão mudanças bruscas uma vez que a internet hoje é muito dependente na infraestrutura de CAs.</p>
   </li>
   <li>
-    <p>A pluralidade de métodos e a <em>plugalidade</em> (:P) de soluções podem convergir num esquema de validação híbrido.</p>
+    <p>A pluralidade de métodos e a <em>plugalidade</em> (:P) de soluções podem <em>convergir</em> num esquema de validação híbrido.</p>
   </li>
   <li>
     <p>Conscientização do público é fundamental.</p>
