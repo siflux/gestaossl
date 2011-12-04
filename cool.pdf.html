@@ -87,7 +87,7 @@ básicos da internet:</p>
   <li>SSL: <a href="https://links.sarava.org/tags/ssl">Várias brechas</a></li>
 </ul>
 
-<p>Estamos falando de falhas de especificação e não de implementação ou DoS, o que é muito
+<p>Estamos falando principalmente de falhas de especificação e não de implementação ou DoS, o que é muito
 mais difícil de mitigar.</p>
 
 
@@ -115,7 +115,7 @@ mais difícil de mitigar.</p>
 </div>
 <div class='slide '>
 <h1 id="ssl">SSL</h1><ul>
-  <li>HSTS</li>
+  <li>HTTP Strict Transport Security - HSTS</li>
   <li>CipherSuite e Perfect Forward Secrecy</li>
   <li>Revogação (CRS / OCSP)</li>
   <li>Autoridades Certificadoras (CAs)</li>
@@ -125,6 +125,7 @@ mais difícil de mitigar.</p>
       <li><a href="http://www.win.tue.nl/hashclash/rogue-ca/">Hashclash (MD5)</a></li>
       <li><a href="https://wiki.koumbit.net/BeastSecurityAssessment">BEAST</a></li>
       <li><a href="https://code.google.com/p/littleblackbox/">LittleBlackBox</a>: chaves padrões em dispositivos embarcados!</li>
+      <li><a href="http://www.thoughtcrime.org/software/sslsniff">sslsnif</a></li>
     </ul>
   </li>
 </ul>
@@ -164,7 +165,7 @@ são considerados como autoassinados.</p>
 <ul>
   <li>Exemplo: o caso do http://www.cacert.org, uma CA Comunitária</li>
   <li>Mozilla: https://www.mozilla.org/projects/security/certs/included/</li>
-  <li>ICP-Brasil: http://www.iti.gov.br/twiki/bin/view/Certificacao/WebHome</li>
+  <li>ICP-Brasil: http://www.iti.gov.br</li>
 </ul>
 
 
@@ -175,7 +176,7 @@ são considerados como autoassinados.</p>
   <li>Opera - http://www.opera.com/docs/ca/</li>
   <li>M$ - http://technet.microsoft.com/en-us/library/cc751157.aspx (desatualizado)</li>
   <li>Safari - https://www.apple.com/certificateauthority/ca_program.html</li>
-  <li>Google - ?</li>
+  <li>Chromiun - <a href="http://code.google.com/p/chromium/wiki/LinuxCertManagement">NSS</a> (GNU/Linux)</li>
 </ul>
 
 
@@ -206,19 +207,29 @@ são considerados como autoassinados.</p>
 
 </div>
 <div class='slide '>
-<h1 id="situao-atual">Situação atual</h1><ul>
+<h1 id="situao-atual">Situação atual</h1><pre><code>The authenticity of host 'foo.example.org (192.0.2.3)' can't be established.
+RSA key fingerprint is 17:f4:2b:22:90:d4:98:9a:a2:c5:95:4e:4a:89:be:90.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre>
+
+<ul>
   <li>Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?</li>
-  <li><a href="http://www.thoughtcrime.org/software/sslsniff">sslsnif</a></li>
   <li>Maus hábitos de sysadmins geram falsa sensação de segurança</li>
-  <li>Bypass da tela de &ldquo;conexão não-confiável&rdquo;</li>
+  <li>Usabilidade: Bypass da tela de &ldquo;conexão não-confiável&rdquo;</li>
 </ul>
 
 
 </div>
 <div class='slide '>
-<h1 id="casos-reais">Casos reais</h1><p>&ldquo;Crime maior do que roubar uma CA é fundar uma CA&rdquo; - Bertold Brecha</p>
+<h1 id="evidncias-de-cooperao">Evidências de cooperação</h1><ul>
+  <li><a href="http://web.monkeysphere.info/news/CA_Cooperation_with_Governments/">Certified Lies: Detecting and Defeating Government Interception Attacks Against SSL</a>: <em>evidence that CAs may be cooperating with government agencies to help them spy undetected on &ldquo;secure&rdquo; encrypted communications</em></li>
+  <li><a href="https://www.schneier.com/blog/archives/2010/04/man-in-the-midd_2.html">Man-in-the-Middle Attacks Against SSL</a>: <em>a new attack, the compelled certificate creation attack, in which government agencies compel a certificate authority to issue false SSL certificates that are then used by intelligence agencies to covertly intercept and hijack individuals&rsquo; secure Web-based communications.</em></li>
+</ul>
 
-<ul>
+
+</div>
+<div class='slide '>
+<h1 id="casos-reais">Casos reais</h1><ul>
   <li><a href="http://it.slashdot.org/story/08/12/23/0046258">Comodogate</a>: mail.google.com, addons.mozilla.org, login.skype.com, etc.</li>
   <li><a href="http://www.f-secure.com/weblog/archives/00002228.html">DigiNotar</a>: certificados falsos da CIA, MI6 e Mossad (<a href="http://www.networking4all.com/en/ssl+certificates/ssl+news/time-line+for+the+diginotar+hack/">timeline</a>).</li>
   <li><a href="https://www.eff.org/observatory">The EFF SSL Observatory</a> (<a href="http://events.ccc.de/congress/2010/Fahrplan/events/4121.en.html">27c3</a>)</li>
@@ -275,7 +286,7 @@ são considerados como autoassinados.</p>
 </div>
 <div class='slide '>
 <h1 id="mas-o-quanto-disso--factvel">Mas o quanto disso é factível?</h1><ul>
-  <li>Oriente médio: &hellip;</li>
+  <li>Oriente médio: <a href="http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html">The Internet&rsquo;s Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked</a></li>
   <li>EUA: <a href="https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T">NSA warrantless surveillance controversy</a></li>
   <li>Brasil: <a href="http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil">Massive DNS poisoning attacks in Brazil</a></li>
 </ul>
@@ -289,7 +300,8 @@ apenas a capacidade do atacante.</p>
 <h1 id="mitigao">Mitigação</h1><p>Recentemente foram propostas várias formas de mitigação:</p>
 
 <ul>
-  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search">Certificate Patrol</a>: muito útil porém sofre to problema de &ldquo;bootstrapping&rdquo;.</li>
+  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search">Certificate Patrol</a>: muito útil porém sofre to problema de &ldquo;bootstrapping&rdquo;/secure introduction (Trust On First Use/Persistence of Pseudonym - TOFU/POP).</li>
+  <li><a href="https://code.google.com/p/certlock/">Certlock</a></li>
   <li>IETF:
     <ul>
       <li><a href="https://www.ietf.org/id/draft-evans-palmer-key-pinning-00.txt">Public Key Pinning Extension for HTTP</a>: também sofre do &ldquo;problema de bootstrapping&rdquo;.</li>
@@ -317,17 +329,12 @@ de CAs pode ser <em>plugável.</em></p>
 
 </div>
 <div class='slide '>
-<h1 id="convergence">Convergence</h1><ul>
-  <li>http://convergence.io</li>
-  <li><a href="http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall">Add-on para firefox</a></li>
+<h1 id="httpconvergenceio">http://convergence.io</h1><ul>
+  <li><a href="http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall">Add-on para firefox</a> + daemon</li>
   <li>Precedido pelo Perspectives (http://perspectives-project.org)</li>
-  <li>&ldquo;Trust agility&rdquo;</li>
-  <li>Problemas:
-    <ul>
-      <li>Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.</li>
-      <li>Mudanças de chaves.</li>
-    </ul>
-  </li>
+  <li>&ldquo;Trust agility&rdquo;: usuário/a escolhe em quem confiar e por quanto tempo</li>
+  <li>Sistema notarial distribuído e robusto</li>
+  <li>Anônimo e com boa usabilidade</li>
 </ul>
 
 
@@ -373,9 +380,17 @@ de CAs pode ser <em>plugável.</em></p>
 
 </div>
 <div class='slide '>
-<h1 id="monkeysphere">Monkeysphere</h1><ul>
-  <li>http://web.monkeysphere.info</li>
-  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search">Add-on pra firefox</a></li>
+<h1 id="convergence-problemas">Convergence: Problemas</h1><ul>
+  <li>Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.</li>
+  <li>Mudanças de chaves.</li>
+  <li>The Citibank Problem</li>
+</ul>
+
+
+</div>
+<div class='slide '>
+<h1 id="httpwebmonkeysphereinfo">http://web.monkeysphere.info</h1><ul>
+  <li><a href="https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search">Add-on pra firefox</a> + agent</li>
   <li>Atrela a autenticação à identificações pessoais pela Web Of Trust</li>
   <li>Também provê autorização</li>
 </ul>
@@ -383,10 +398,12 @@ de CAs pode ser <em>plugável.</em></p>
 
 </div>
 <div class='slide '>
-<h1 id="i---estabelecimento-de-confiana-entre-pessoas">I - Estabelecimento de confiança entre pessoas</h1><pre><code> ________       ________
+<h1 id="i---estabelecimento-de-confiana-entre-pessoas">I - Estabelecimento de confiança entre pessoas</h1><p>Usuários e/ou admins trocam seus fingerprints OpenPGP.</p>
+
+<pre><code> ________       ________
 |        |--&gt;--|        |
 | Admin  |     |  User  |
-|________|--&gt;--|________|
+|________|--&lt;--|________|
 </code></pre>
 
 
@@ -424,10 +441,20 @@ de CAs pode ser <em>plugável.</em></p>
 
 </div>
 <div class='slide '>
+<h1 id="web-of-trust">Web of Trust</h1><ul>
+  <li>Identificação.</li>
+  <li>Confiabilidade.</li>
+  <li>Mesmo que um usuário não tenha identificado um admin que assinou a chave de um servidor,
+confiabilidade ainda pode ser estabelecida por meios indiretos.</li>
+</ul>
+
+
+</div>
+<div class='slide '>
 <h1 id="integrao">Integração</h1><ul>
   <li>O Monkeysphere ainda é muito geeky porém oferece um nível de segurança muito mais alto
 para a verificação de certificados; o código está maduro porém é preciso muito mais desenvolvimento
-de UI e usabilidade.</li>
+de UI e usabilidade, além de depender de uma grande WoT para ser eficaz.</li>
   <li>O Convergence pode utilizar como backend o Monkeysphere, o que pode reduzir o problema do MITM
 upstream.</li>
 </ul>
@@ -462,7 +489,10 @@ em dizer que o problema são as &ldquo;maçãs podres&rdquo; ou o excesso de CAs
 
 </div>
 <div class='slide '>
-<h1 id="perguntas">Perguntas?</h1></div>
+<h1 id="perguntas">Perguntas?</h1><pre><code>:)
+</code></pre>
+
+</div>
 
 
   </div> <!-- presentation -->

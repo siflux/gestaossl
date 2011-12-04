@@ -38,7 +38,7 @@ básicos da internet:
 - BGP: [The Internet’s Biggest Security Hole](http://www.wired.com/threatlevel/2008/08/how-to-intercep/)
 - SSL: [Várias brechas](https://links.sarava.org/tags/ssl)
 
-Estamos falando de falhas de especificação e não de implementação ou DoS, o que é muito
+Estamos falando principalmente de falhas de especificação e não de implementação ou DoS, o que é muito
 mais difícil de mitigar.
 
 SSL: Breve histórico
@@ -61,7 +61,7 @@ No [caso do SSL/TLS](https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activist
 SSL
 ===
 
-- HSTS
+- HTTP Strict Transport Security - HSTS
 - CipherSuite e Perfect Forward Secrecy
 - Revogação (CRS / OCSP)
 - Autoridades Certificadoras (CAs)
@@ -70,6 +70,7 @@ SSL
   - [Hashclash (MD5)](http://www.win.tue.nl/hashclash/rogue-ca/)
   - [BEAST](https://wiki.koumbit.net/BeastSecurityAssessment)
   - [LittleBlackBox](https://code.google.com/p/littleblackbox/): chaves padrões em dispositivos embarcados!
+  - [sslsnif](http://www.thoughtcrime.org/software/sslsniff)
 
 Autoridades certificadoras
 ==========================
@@ -78,7 +79,6 @@ Autoridades certificadoras
 - 2009: [Relatório da Netcraft](https://ssl.netcraft.com/ssl-sample-report)
 - 2010: Verisign: operação de CA vendida por US$1.28 bi para a Symantec
 - "Two big to fail"
-
 
 Netcraft (2009)
 ===============
@@ -102,7 +102,7 @@ são considerados como autoassinados.
 
 - Exemplo: o caso do http://www.cacert.org, uma CA Comunitária
 - Mozilla: https://www.mozilla.org/projects/security/certs/included/
-- ICP-Brasil: http://www.iti.gov.br/twiki/bin/view/Certificacao/WebHome
+- ICP-Brasil: http://www.iti.gov.br
 
 CA: Procedimentos
 =================
@@ -111,7 +111,7 @@ CA: Procedimentos
 - Opera - http://www.opera.com/docs/ca/
 - M$ - http://technet.microsoft.com/en-us/library/cc751157.aspx (desatualizado)
 - Safari - https://www.apple.com/certificateauthority/ca_program.html
-- Google - ?
+- Chromiun - [NSS](http://code.google.com/p/chromium/wiki/LinuxCertManagement) (GNU/Linux)
 
 CA: Em geral
 ============
@@ -139,15 +139,24 @@ Obtenção de um certificado assinado
 Situação atual
 ==============
 
+    The authenticity of host 'foo.example.org (192.0.2.3)' can't be established.
+    RSA key fingerprint is 17:f4:2b:22:90:d4:98:9a:a2:c5:95:4e:4a:89:be:90.
+    Are you sure you want to continue connecting (yes/no)?
+
 - Vocês checam seus fingerprints (OpenPGP, SSH e OpenSSL)?
-- [sslsnif](http://www.thoughtcrime.org/software/sslsniff)
 - Maus hábitos de sysadmins geram falsa sensação de segurança
-- Bypass da tela de "conexão não-confiável"
+- Usabilidade: Bypass da tela de "conexão não-confiável"
+
+Evidências de cooperação
+========================
+
+  - [Certified Lies: Detecting and Defeating Government Interception Attacks Against SSL](http://web.monkeysphere.info/news/CA_Cooperation_with_Governments/): _evidence that CAs may be cooperating with government agencies to help them spy undetected on "secure" encrypted communications_
+  - [Man-in-the-Middle Attacks Against SSL](https://www.schneier.com/blog/archives/2010/04/man-in-the-midd_2.html): _a new attack, the compelled certificate creation attack, in which government agencies compel a certificate authority to issue false SSL certificates that are then used by intelligence agencies to covertly intercept and hijack individuals' secure Web-based communications._
 
 Casos reais
 ===========
 
-"Crime maior do que roubar uma CA é fundar uma CA" - Bertold Brecha
+% "Crime maior do que roubar uma CA é fundar uma CA" - Bertold Brecha
 
 - [Comodogate](http://it.slashdot.org/story/08/12/23/0046258): mail.google.com, addons.mozilla.org, login.skype.com, etc.
 - [DigiNotar](http://www.f-secure.com/weblog/archives/00002228.html): certificados falsos da CIA, MI6 e Mossad ([timeline](http://www.networking4all.com/en/ssl+certificates/ssl+news/time-line+for+the+diginotar+hack/)).
@@ -163,7 +172,6 @@ O que é preciso para interceptar conexão SSL?
    - DNS poisoning apontando requisições para servidores maliciosos.
    - Redirecionamento de tráfego via BGP.
    - Acesso físico à rede.
-
 
 Conexão SSL
 ============
@@ -198,7 +206,7 @@ MITM
 Mas o quanto disso é factível?
 ==============================
 
-- Oriente médio: ...
+- Oriente médio: [The Internet's Secret Back Door: Web users in the United Arab Emirates have more to worry about than having just their BlackBerries cracked](http://www.slate.com/articles/technology/webhead/2010/08/the_internets_secret_back_door.html)
 - EUA: [NSA warrantless surveillance controversy](https://en.wikipedia.org/wiki/NSA_warrantless_surveillance_controversy / https://en.wikipedia.org/wiki/Hepting_v._AT%26T)
 - Brasil: [Massive DNS poisoning attacks in Brazil](http://www.securelist.com/en/blog/208193214/Massive_DNS_poisoning_attacks_in_Brazil)
 
@@ -210,7 +218,8 @@ Mitigação
 
 Recentemente foram propostas várias formas de mitigação:
 
-- [Certificate Patrol](https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search): muito útil porém sofre to problema de "bootstrapping".
+- [Certificate Patrol](https://addons.mozilla.org/pt-BR/firefox/addon/certificate-patrol/?src=search): muito útil porém sofre to problema de "bootstrapping"/secure introduction (Trust On First Use/Persistence of Pseudonym - TOFU/POP).
+- [Certlock](https://code.google.com/p/certlock/)
 - IETF:
   - [Public Key Pinning Extension for HTTP](https://www.ietf.org/id/draft-evans-palmer-key-pinning-00.txt): também sofre do "problema de bootstrapping".
   - [DNSSEC/DANE](http://tools.ietf.org/html/draft-ietf-dane-protocol-12): aumenta ainda mais a centralidade do DNS e apenas muda o problema de lugar.
@@ -228,16 +237,14 @@ A grande questão é: abandonar o SSL hoje é uma opção que não depende apena
 é importante considerar que _o modelo atual de certificação não é mandatório._ Ao invés disso, o modelo
 de CAs pode ser _plugável._
 
-Convergence
-===========
+http://convergence.io
+=====================
 
-- http://convergence.io
-- [Add-on para firefox](http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall)
+- [Add-on para firefox](http://convergence.io/releases/firefox/convergence-current.application=x-xpinstall) + daemon
 - Precedido pelo Perspectives (http://perspectives-project.org)
-- "Trust agility"
-- Problemas:
-  - Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.
-  - Mudanças de chaves.
+- "Trust agility": usuário/a escolhe em quem confiar e por quanto tempo
+- Sistema notarial distribuído e robusto
+- Anônimo e com boa usabilidade
 
 Funcionamento
 =============
@@ -278,21 +285,29 @@ Bundles
       |_________|------>----------|__________|
                        
 
-Monkeysphere
-============
+Convergence: Problemas
+======================
 
-- http://web.monkeysphere.info
-- [Add-on pra firefox](https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search)
+  - Se o MITM estiver exatamente no provedor upstream, o Convergence pode não perceber.
+  - Mudanças de chaves.
+  - The Citibank Problem
+
+http://web.monkeysphere.info
+============================
+
+- [Add-on pra firefox](https://addons.mozilla.org/pt-BR/firefox/addon/monkeysphere/?src=search) + agent
 - Atrela a autenticação à identificações pessoais pela Web Of Trust
 - Também provê autorização
 
 I - Estabelecimento de confiança entre pessoas
 ==============================================
 
+Usuários e/ou admins trocam seus fingerprints OpenPGP.
+
      ________       ________
     |        |-->--|        |
     | Admin  |     |  User  |
-    |________|-->--|________|
+    |________|--<--|________|
 
 
 II - Assinatura de chave do servidor
@@ -325,12 +340,20 @@ III - Conexão SSL
     |_________|------>-------|__________|
                      1  
 
+Web of Trust
+============
+
+  - Identificação.
+  - Confiabilidade.
+  - Mesmo que um usuário não tenha identificado um admin que assinou a chave de um servidor,
+    confiabilidade ainda pode ser estabelecida por meios indiretos.
+
 Integração
 ==========
 
 - O Monkeysphere ainda é muito geeky porém oferece um nível de segurança muito mais alto
   para a verificação de certificados; o código está maduro porém é preciso muito mais desenvolvimento
-  de UI e usabilidade.
+  de UI e usabilidade, além de depender de uma grande WoT para ser eficaz.
 - O Convergence pode utilizar como backend o Monkeysphere, o que pode reduzir o problema do MITM
   upstream.
 
@@ -354,3 +377,6 @@ Demonstrações
 
 Perguntas?
 =========
+
+    :)
+
