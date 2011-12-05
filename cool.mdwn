@@ -50,6 +50,9 @@ Pontos principais de um protocolo seguro:
   4. Disponibilidade: proteção a DoS, etc.
   5. Anonimato.
 
+SSL: Breve histórico (cont)
+===========================
+
 No [caso do SSL/TLS](https://techmeet.sarava.org/uploads/Agenda/SSL_For_Activists.pdf):
 
   1. Sigilo:
