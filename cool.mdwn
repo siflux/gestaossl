@@ -46,7 +46,7 @@ Pontos principais de um protocolo seguro:
 
   1. Sigilo: a informação não será lida por terceiros.
   2. Integridade: a informação não será adulterada.
-  3. Altenticidade: os pontos da comunicação serão verificados.
+  3. Autenticidade: os pontos da comunicação serão verificados.
   4. Disponibilidade: proteção a DoS, etc.
   5. Anonimato.
 
